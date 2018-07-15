@@ -6,8 +6,9 @@
 At w3schools.com you will learn how to make a website. We offer free tutorials in all web development technologies.
 </textarea>
 
+<script src="./css_path.js"></script>
 <script>
-  var record = [];
+  var records = [];
   var record_activate = false;
   var button_id = "button_C773FB8472D65E09634BDEFFA080BF3602D1F68C"; 
 
@@ -16,7 +17,7 @@ At w3schools.com you will learn how to make a website. We offer free tutorials i
       return;
     if (!record_activate)
       return;
-    record.push({eventType:e.type, item:e.target});
+    records.push({eventType:e.type, item:e.target});
     alert("Recorded! : " + e.type);
   }
 
@@ -26,13 +27,19 @@ At w3schools.com you will learn how to make a website. We offer free tutorials i
       record_activate = false;
       rcButton.innerText = "Start recording";
 
-      // TODO: Convert record into external file.
-      
-      alert(JSON.stringify(record)); // 출력은 잘 안되지만, record에 DOM element들 잘 저장됨.
-      record = [];
+      for (i in records) {
+        record = records[i];
+        record["css_path"] = UTILS.cssPath(record["item"]);
+        delete record.item;
+      }
+
+      let result = {"url" : window.location.href, "records" : records};
+      let result_string = JSON.stringify(result);
+      alert(result_string); // -> make json file with result_string.
+      records = [];
 
     } else {
-      record = [];
+      records = [];
       rcButton.innerText = "Stop recording";
       record_activate = true;
     }
