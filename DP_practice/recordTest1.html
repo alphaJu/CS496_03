@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>My First Heading</h1><p>My first paragraph.</p><textarea rows="4" cols="50">
+At w3schools.com you will learn how to make a website. We offer free tutorials in all web development technologies.
+</textarea>
+
+<script>
+  var record = [];
+  var record_activate = false;
+  var button_id = "button_C773FB8472D65E09634BDEFFA080BF3602D1F68C"; 
+
+  function recordFunc(e) {
+    if (e.target.id == button_id)
+      return;
+    if (!record_activate)
+      return;
+    record.push({eventType:e.type, item:e.target});
+    alert("Recorded! : " + e.type);
+  }
+
+  function rcButtonListener(e) {
+    var rcButton = document.getElementById(button_id);
+    if (record_activate) {
+      record_activate = false;
+      rcButton.innerText = "Start recording";
+
+      // TODO: Convert record into external file.
+      
+      alert(JSON.stringify(record)); // 출력은 잘 안되지만, record에 DOM element들 잘 저장됨.
+      record = [];
+
+    } else {
+      record = [];
+      rcButton.innerText = "Stop recording";
+      record_activate = true;
+    }
+  }
+
+  var record_button = document.createElement("button");
+  record_button.setAttribute("type", "button");
+  record_button.setAttribute("id", button_id);
+  record_button.innerText = "Start recording";
+  record_button.addEventListener('click', rcButtonListener, false);
+  document.body.insertBefore(record_button, document.body.firstChild);
+
+  event_list = ['click'];
+  for (eType in event_list) {
+    window.addEventListener('click', recordFunc, false); // e.type = "click"
+  }
+
+</script>
+
+</body>
+</html>
