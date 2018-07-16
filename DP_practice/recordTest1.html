@@ -12,11 +12,13 @@ At w3schools.com you will learn how to make a website. We offer free tutorials i
 At w3schools.com you will learn how to make a website. We offer free tutorials in all web development technologies.
 </textarea>
 
+<script src="./func.js"></script>
 <script src="./css_path.js"></script>
+<script src="./FileSaver.js"></script>
 <script>
   var records = [];
   var record_activate = false;
-  var button_id = "button_C773FB8472D65E09634BDEFFA080BF3602D1F68C"; 
+  var button_id = "button_C773FB8472D65E09634BDEFFA080BF3602D1F68C";
 
   function recordFunc(e) {
     if (e.target.id == button_id)
@@ -64,6 +66,8 @@ At w3schools.com you will learn how to make a website. We offer free tutorials i
       let result = {"url" : window.location.href, "records" : records};
       let result_string = JSON.stringify(result);
       alert(result_string); // -> make json file with result_string.
+      let bb = self.Blob;
+      saveAs(new bb([result_string], {type: "text/plain"}), "records1"); // result_string (x) [result_string] (o)
       records = [];
 
     } else {
