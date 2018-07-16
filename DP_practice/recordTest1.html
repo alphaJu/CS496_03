@@ -19,6 +19,10 @@ At w3schools.com you will learn how to make a website. We offer free tutorials i
   var records = [];
   var record_activate = false;
   var button_id = "button_C773FB8472D65E09634BDEFFA080BF3602D1F68C";
+  var lastScrollTop = 0;
+  var lastScrollTop2 = 0;
+  var timer;
+  var timer2;
 
   function recordFunc(e) {
     if (e.target.id == button_id)
@@ -26,30 +30,55 @@ At w3schools.com you will learn how to make a website. We offer free tutorials i
     if (!record_activate)
       return;
     records.push({eventType:e.type, item:e.target});
-    alert("Recorded! : " + e.type);
+    alert("Recorded! : " +e.type);
   }
 
   function scrollFunc(e) {
-    if (!record_activate)
-      return;
-    if(window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-      alert("Bottom");
+    if (!record_activate){
       return;
     }
-    records.push({eventType:e.type, item:e.target});
-    alert("Scrolled : " + e.type);
+    if(window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+      return;
+    }
+    var st = window.pageYOffset || document.documentElement.scrollTop;
+    var dir = 'up';
+    var amount = 0;
+    if(st > lastScrollTop) {
+      dir = 'down';
+      amount = st - lastScrollTop;
+    }
+    else {
+      dir = 'up';
+      amount = lastScrollTop - st;
+    }
+    lastScrollTop = st <= 0 ? 0 : st;
+    records.push({eventType:e.type, item:e.target, dir:dir, amount:amount});
+    alert("Scrolled : " + this +  e.type);
   }
 
   function scrollFunc2(e) {
-    if (!record_activate)
+    if (!record_activate){
       return;
- /*   if(this.innerHeight + this.scrollY >= document.body.offsetHeight) {
-      alert("Bottom");
+    }
+    if(e.target.scrollHeight - e.target.offsetHeight <= e.target.scrollTop) {
+      alert("bottom");
       return;
-    }*/
-    records.push({eventType:e.type, item:e.target});
-    alert("Scrolled textarea : " + e.type);
+    }
+    var st = e.target.pageYOffset || e.target.scrollTop;
+    var dir = 'up';
+    if(st > lastScrollTop2) {
+      dir = 'down';
+      amount = lastScrollTop2 - st;
+    }
+    else {
+      dir = 'up';
+      amount = lastScrollTop2 - st;
+    }
+    lastScrollTop2 = st <= 0 ? 0 : st;
+    records.push({eventType:e.type, item:e.target, dir:dir, amount:amount});
+    alert("Scrolled child : " + e.target + e.type);
   }
+  
 
   function rcButtonListener(e) {
     var rcButton = document.getElementById(button_id);
@@ -87,9 +116,18 @@ At w3schools.com you will learn how to make a website. We offer free tutorials i
   event_list = ['click', 'scroll'];
   for (eType in event_list) {
     window.addEventListener('click', recordFunc, false); // e.type = "click"
-    window.addEventListener('scroll', scrollFunc, false);
-    var text = document.getElementsByTagName('textarea')[0];
-    text.addEventListener('scroll', scrollFunc2, false);
+    window.addEventListener('scroll', function(e) {
+      clearTimeout(timer);
+      timer = setTimeout(() => scrollFunc(e), 150);
+    }, false);
+      
+    var elem = document.getElementsByTagName('*')
+    for (var i = 0; i < elem.length; i++) {
+      elem[i].addEventListener('scroll', function(e) {
+        clearTimeout(timer2);
+        timer2 = setTimeout(() => scrollFunc2(e), 150);
+      }, false);
+    }
   }
 </script>
 

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+<form>
+	<input type="text" id="image_name" value=""/>
+	<input type="button" id="btn" value="GO"/>
+</form>
+	<script type="text/javascript">
+		document.getElementById('btn').onclick = function() {
+			var val = document.getElementById('image_name').value,
+				src = 'https://www.google.co.kr/search?q='+ val + '&source=lnms&tbm=isch',
+				img = document.createElement('img');
+
+				img.src = src;
+				document.body.appendChild(img);
+		}
+	</script>
+</body>
+</html>
