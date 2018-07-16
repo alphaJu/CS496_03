@@ -78,6 +78,14 @@ At w3schools.com you will learn how to make a website. We offer free tutorials i
     records.push({eventType:e.type, item:e.target, dir:dir, amount:amount});
     alert("Scrolled child : " + e.target + e.type);
   }
+
+  function keydownFunc(e) {
+    if (!record_activate) {
+      return;
+    }
+    records.push({eventType:e.type, item:e.target, key:e.key, start:e.target.selectionStart})
+    alert("Key down : " + e.target + e.type + e.key)
+  }
   
 
   function rcButtonListener(e) {
@@ -113,14 +121,15 @@ At w3schools.com you will learn how to make a website. We offer free tutorials i
   record_button.addEventListener('click', rcButtonListener, false);
   document.body.insertBefore(record_button, document.body.firstChild);
 
-  event_list = ['click', 'scroll'];
+  event_list = ['click', 'scroll', 'keydown'];
   for (eType in event_list) {
     window.addEventListener('click', recordFunc, false); // e.type = "click"
     window.addEventListener('scroll', function(e) {
       clearTimeout(timer);
       timer = setTimeout(() => scrollFunc(e), 150);
     }, false);
-      
+    window.addEventListener('keydown', keydownFunc, false);
+
     var elem = document.getElementsByTagName('*')
     for (var i = 0; i < elem.length; i++) {
       elem[i].addEventListener('scroll', function(e) {
