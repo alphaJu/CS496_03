@@ -1,0 +1,1 @@
+{"url":"file:///C:/Users/q/Desktop/week3/week3/CS496_03/DP_practice/recordTest1.html","records":[{"eventType":"click","css_path":"html > body > h1"},{"eventType":"click","css_path":"html > body > p"},{"eventType":"click","css_path":"html > body > textarea"}]}

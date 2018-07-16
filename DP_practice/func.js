@@ -1,4 +1,4 @@
-var inspect_activate = false;
+var inspect_activate = true;
 var prev_item = null;
 
 var yellow_color = "rgb(253, 255, 71)";
@@ -27,7 +27,7 @@ function adjust_color(elem) {
 function highlight(e) {
   if (!inspect_activate)
     return;
-  adjust(e.target);
+  adjust_color(e.target);
 }
 
 function mmove(e) {
@@ -52,6 +52,6 @@ function mapb(f) {
   });
 }
 
-//document.body.addEventListener('click', highlight, false);
+document.body.addEventListener('click', highlight, false);
 //document.body.addEventListener('mousemove', mmove, false);
 //mapb(e => e.addEventListener('mousemove', mmove, false));
