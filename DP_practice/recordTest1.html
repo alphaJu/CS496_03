@@ -4,6 +4,12 @@
 
 <h1>My First Heading</h1><p>My first paragraph.</p><textarea rows="4" cols="50">
 At w3schools.com you will learn how to make a website. We offer free tutorials in all web development technologies.
+At w3schools.com you will learn how to make a website. We offer free tutorials in all web development technologies.
+At w3schools.com you will learn how to make a website. We offer free tutorials in all web development technologies.
+At w3schools.com you will learn how to make a website. We offer free tutorials in all web development technologies.
+At w3schools.com you will learn how to make a website. We offer free tutorials in all web development technologies.
+At w3schools.com you will learn how to make a website. We offer free tutorials in all web development technologies.
+At w3schools.com you will learn how to make a website. We offer free tutorials in all web development technologies.
 </textarea>
 
 <script src="./css_path.js"></script>
@@ -19,6 +25,28 @@ At w3schools.com you will learn how to make a website. We offer free tutorials i
       return;
     records.push({eventType:e.type, item:e.target});
     alert("Recorded! : " + e.type);
+  }
+
+  function scrollFunc(e) {
+    if (!record_activate)
+      return;
+    if(window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+      alert("Bottom");
+      return;
+    }
+    records.push({eventType:e.type, item:e.target});
+    alert("Scrolled : " + e.type);
+  }
+
+  function scrollFunc2(e) {
+    if (!record_activate)
+      return;
+ /*   if(this.innerHeight + this.scrollY >= document.body.offsetHeight) {
+      alert("Bottom");
+      return;
+    }*/
+    records.push({eventType:e.type, item:e.target});
+    alert("Scrolled textarea : " + e.type);
   }
 
   function rcButtonListener(e) {
@@ -52,11 +80,13 @@ At w3schools.com you will learn how to make a website. We offer free tutorials i
   record_button.addEventListener('click', rcButtonListener, false);
   document.body.insertBefore(record_button, document.body.firstChild);
 
-  event_list = ['click'];
+  event_list = ['click', 'scroll'];
   for (eType in event_list) {
     window.addEventListener('click', recordFunc, false); // e.type = "click"
+    window.addEventListener('scroll', scrollFunc, false);
+    var text = document.getElementsByTagName('textarea')[0];
+    text.addEventListener('scroll', scrollFunc2, false);
   }
-
 </script>
 
 </body>
