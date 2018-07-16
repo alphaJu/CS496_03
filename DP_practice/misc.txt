@@ -1,0 +1,43 @@
+https://poiemaweb.com/js-dom - html의 DOM구조와 javascript의 상호작용
+
+DOM query로 html의 DOM에 접근할 수 있음.
+
+- id attribute 사용 : document.getElementById(id)
+	id 어트리뷰트 값으로 요소 노드를 한 개 선택한다. 복수개가 선택된 경우, 첫번째 요소만 반환한다.
+	Return: HTMLElement를 상속받은 객체
+	모든 브라우저에서 동작
+
+- css selector 사용 : document.querySelector(cssSelector)
+	CSS 셀렉터를 사용하여 요소 노드를 한 개 선택한다. 복수개가 선택된 경우, 첫번째 요소만 반환한다.
+	IE 8 이상에서 동작
+
+	+
+
+	document.querySelectorAll은 NodeList(non-live (실시간이 아님))을 반환.
+
++ css_path.js의 cssPath함수를 쓰면, document.querySelect(UTILS.cssPath(element)) == element !!
+
+
+- className 사용 : document.getElementsByClassName(class)
+	"한번에 여러개"
+	class 어트리뷰트 값으로 요소 노드를 모두 선택한다. 공백으로 구분하여 여러 개의 class를 지정할 수 있다.
+	Return: HTMLCollection (live)
+	IE9 이상의 브라우저에서 동작
+
+	* iterate 할 때 주의. HTMLCollection은 변화를 바로 반영해서 iterate에서 item을 제거하거나 하는 경우 역순으로 돌려야 함.
+
+
+- tag 종류 사용 : document.getElementsByTagName(tagName)
+	주어진 태그명에 해당하는 모든 elem을 HTMLCollection (live)로 반환.
+	모든 브라우저에서 동작
+
+
+- traversal 시 주의 :
+ 	  <ul>
+        <li id="one" class="red">Seoul</li>
+        <li id="two" class="red">London</li>
+        <li id="three" class="red">Newyork</li>
+        <li id="four">Tokyo</li>
+      </ul>
+
+      요런 형태면, ul의 child node는 li node 4개 뿐 만이 아니라, 매 li node 끝의 줄바꿈이 text node 처리가 되서 총 8개가 됨. 주의.
